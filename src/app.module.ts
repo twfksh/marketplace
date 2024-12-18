@@ -8,7 +8,7 @@ import { PaymentModule } from './payment/payment.module';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 
-// TODO: resolve forwardRef issue in auth and users module
+// TODO: resolve forwardRef issue in auth and users module 
 @Module({
   imports: [
     ConfigModule.forRoot({
