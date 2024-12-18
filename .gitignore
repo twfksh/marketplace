@@ -42,6 +42,9 @@ lerna-debug.log*
 .env.production.local
 .env.local
 
+# credentials
+ca.pem
+
 # temp directory
 .temp
 .tmp
