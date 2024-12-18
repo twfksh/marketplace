@@ -1,6 +1,8 @@
-import { Controller, Post, Param, Req, BadRequestException } from '@nestjs/common';
+import { Controller, Post, Param, Req, BadRequestException, UseGuards } from '@nestjs/common';
 import { PaymentService } from './payment.service';
 import { ConfigService } from '@nestjs/config';
+import { JwtAuthGuard } from 'src/auth/auth.guard';
+import { RoleGuard } from 'src/auth/role.guard';
 
 @Controller('payment')
 export class PaymentController {
@@ -10,6 +12,7 @@ export class PaymentController {
   ) { }
 
   @Post('create-intent/:orderId')
+  @UseGuards(JwtAuthGuard, new RoleGuard('customer'))
   createPaymentIntent(@Param('orderId') orderId: number) {
     return this.paymentService.createPaymentIntent(orderId);
   }

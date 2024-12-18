@@ -20,7 +20,6 @@ export class UsersController {
   }
 
   @Post('register')
-  @UseGuards(LocalAuthGuard)
   async create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
