@@ -1,4 +1,5 @@
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
+import * as fs from 'node:fs';
 
 export class TypeOrmConfigService {
     public static envOptions(): TypeOrmModuleOptions {
@@ -9,6 +10,10 @@ export class TypeOrmConfigService {
             username: process.env.PG_USERNAME,
             password: process.env.PG_PASSWORD,
             database: process.env.PG_DATABASE,
+            ssl: {
+                rejectUnauthorized: true,
+                ca: fs.readFileSync('./ca.pem'),
+            },
             entities: ['dist/**/**/*.entity.{ts,js}'],
             synchronize: true, // do NOT use in production environment, use migration instead
         }
