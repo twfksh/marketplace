@@ -14,9 +14,9 @@ export class UsersService {
   ) { }
 
   async create(createUserDto: CreateUserDto) {
-    const { username, email, password, role } = createUserDto;
+    const { username, img, email, password, role } = createUserDto;
     const hashedPassword = await hashBcrypt(password);
-    const user = this.userRepository.create({ username, email, password: hashedPassword, role });
+    const user = this.userRepository.create({ username, img, email, password: hashedPassword, role });
     return this.userRepository.save(user);
   }
 

@@ -12,7 +12,6 @@ export class PaymentController {
   ) { }
 
   @Post('create-intent/:orderId')
-  @UseGuards(JwtAuthGuard, new RoleGuard('customer'))
   createPaymentIntent(@Param('orderId') orderId: number) {
     return this.paymentService.createPaymentIntent(orderId);
   }

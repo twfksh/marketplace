@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
 import { Category } from './category.entity';
+import { Review } from 'src/review/entities/review.entity';
 
 @Entity()
 export class Product {
@@ -8,6 +9,9 @@ export class Product {
 
     @Column()
     name: string;
+
+    @Column({ nullable: true })
+    img: string;
 
     @Column('text')
     description: string;
@@ -23,4 +27,7 @@ export class Product {
 
     @ManyToOne(() => Category, category => category.products)
     category: Category;
+
+    @OneToMany(() => Review, review => review.product)
+    reviews: Review[];
 }

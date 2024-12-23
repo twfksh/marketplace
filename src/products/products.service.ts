@@ -80,4 +80,33 @@ export class ProductsService {
     const category = await this.findCategoryById(id);
     await this.categoriesRepository.remove(category);
   }
+
+  async searchProducts(query: string): Promise<Product[]> {
+    return this.productsRepository.createQueryBuilder('product')
+      .where('product.name LIKE :query', { query: `%${query}%` })
+      .orWhere('product.description LIKE :query', { query: `%${query}%` })
+      .getMany();
+  }
+
+  async filterProducts(categoryId?: number, minPrice?: number, maxPrice?: number, minRating?: number): Promise<Product[]> {
+    let queryBuilder = this.productsRepository.createQueryBuilder('product');
+
+    if (categoryId) {
+      queryBuilder = queryBuilder.andWhere('product.category.id = :categoryId', { categoryId });
+    }
+
+    if (minPrice) {
+      queryBuilder = queryBuilder.andWhere('product.price >= :minPrice', { minPrice });
+    }
+
+    if (maxPrice) {
+      queryBuilder = queryBuilder.andWhere('product.price <= :maxPrice', { maxPrice });
+    }
+
+    if (minRating) {
+      queryBuilder = queryBuilder.andWhere('product.rating >= :minRating', { minRating });
+    }
+
+    return queryBuilder.getMany();
+  }
 }

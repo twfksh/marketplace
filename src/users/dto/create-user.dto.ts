@@ -1,10 +1,13 @@
-import { IsAlphanumeric, IsEmail, IsIn, IsNotEmpty, MinLength } from "class-validator";
+import { IsAlphanumeric, IsEmail, IsIn, IsNotEmpty, IsUrl, MinLength } from "class-validator";
 
 export class CreateUserDto {
     @IsNotEmpty()
     @MinLength(4)
     @IsAlphanumeric('en-US')
     username: string;
+
+    @IsUrl()
+    img: string;
 
     @IsEmail()
     email: string;

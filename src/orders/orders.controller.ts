@@ -10,31 +10,26 @@ export class OrdersController {
   constructor(private readonly ordersService: OrdersService) { }
 
   @Post()
-  @UseGuards(JwtAuthGuard, new RoleGuard('customer'))
   createOrder(@Body() createOrderDto: CreateOrderDto) {
     return this.ordersService.createOrder(createOrderDto);
   }
 
   @Get()
-  @UseGuards(JwtAuthGuard, new RoleGuard('admin'))
   findAllOrders() {
     return this.ordersService.findAllOrders();
   }
 
   @Get(':id')
-  @UseGuards(JwtAuthGuard)
   findOrderById(@Param('id') id: string) {
     return this.ordersService.findOrderById(+id);
   }
 
   @Patch(':id')
-  @UseGuards(JwtAuthGuard)
   updateOrderStatus(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
     return this.ordersService.updateOrderStatus(+id, updateOrderDto);
   }
 
   @Delete(':id')
-  @UseGuards(JwtAuthGuard)
   removeOrder(@Param('id') id: string) {
     return this.ordersService.removeOrder(+id);
   }
